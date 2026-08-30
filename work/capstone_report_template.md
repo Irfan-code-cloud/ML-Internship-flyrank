@@ -18,7 +18,10 @@ The transparent baseline is a Dummy Regressor model that predicts the mean train
 The method utilizes a `HistGradientBoostingRegressor`. This model fits the lane perfectly because it is highly efficient for tabular data and handles non-linear relationships, such as the exponential decay of CTR relative to search position. The exact feature list consists of 7-day lags: `gsc_position_lag7`, `gsc_impressions_lag7`, `ga4_engagement_sec_lag7`, alongside `ai_gemini_score` and `is_weekend`. Unlagged metrics were left out on purpose. The target is the `actual_ctr` (Clicks / Impressions) observed on the target day.
 
 ## 5. Evaluation
-The validation design is an 80/20 random train/test split. Because all features are strictly lagged by 7 days prior to the prediction day, temporal leakage within the same month is structurally prevented[cite: 5]. On the exact same split, the model achieved an MAE of 0.005146 and an R² Score of 0.150442, successfully demonstrating directional predictive lift over the baseline. 
+The validation design is an 80/20 random train/test split. Because all features are strictly lagged by 7 days prior to the prediction day, temporal leakage within the same month is structurally prevented[cite: 5]. On the exact same split, the model achieved an MAE of 0.005146 and an R² Score of 0.150442, successfully demonstrating directional predictive lift over the baseline.
+
+![Model vs Baseline](artifacts/model_vs_baseline_r2.png)
+![Opportunity Gap Distribution](artifacts/opportunity_gap_distribution.png)
 
 ## 6. Interpretation
 The model captures historical statistical associations to predict expected CTR. By evaluating Expected CTR versus Actual CTR, the model identifies an Opportunity Gap. URLs with the largest positive gaps capture significantly fewer clicks than expected given their historical search position and engagement. 
